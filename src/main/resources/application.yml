@@ -1,0 +1,41 @@
+#配置数据源
+spring:
+  datasource: #mysql数据库
+    url: jdbc:mysql://58.210.36.243:8077/test?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: zczhang
+    password: zczhang123
+    driver-class-name: com.mysql.jdbc.Driver #com.mysql.cj.jdbc.Driver
+#  jedis: #redis缓存
+#    host: 106.14.72.179
+#    password: redispassword
+#    port: 6379
+#    pool:
+#      max-idle: 100
+#      min-idle: 1
+#      max-active: 1000
+#      max-wait: -1
+mvc:
+  static-path-pattern: /static/**
+
+
+
+mybatis:
+  mapper-Locations: classpath:com/example/backstage/mapper/*.xml #扫描mapper.xml文件
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+#thymeleaf start
+thymeleaf:
+  mode: LEGACYHTML5
+  encoding: utf-8
+  content-type: text/html
+  cache: false
+#  prefix: /view/
+  prefix: classpath:/templates/view/
+
+
+
+
+
+
