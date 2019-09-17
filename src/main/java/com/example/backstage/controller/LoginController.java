@@ -41,7 +41,6 @@ public class LoginController {
     // 未登录前默认跳转至登录页面
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String defaultLogin() {
-        System.out.println("111111111111111111111");
         return "/view/login";
     }
 
