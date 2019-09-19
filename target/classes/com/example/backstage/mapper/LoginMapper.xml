@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backstage.dao.LoginMapper">
+
+    <sql id="menu">
+            id,
+            title,
+            href,
+            target,
+            icon,
+            parent_id,
+            sort,
+            menu_type,
+            delete_flag,
+            stage,
+            image
+        </sql>
+
+    <select id="getMenuOne" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        <include refid="menu"></include>
+        FROM
+        t_menu
+        <where>
+            1=1
+            <if test="id != null and id !=''">and id=#{id}</if>
+            <if test="parent_id != null and parent_id !=''">and parent_id=#{parent_id}</if>
+            <if test="menu_type != null and menu_type !=''">and menu_type=#{menu_type}</if>
+            <if test="delete_flag != null and delete_flag !=''">and delete_flag=#{delete_flag}</if>
+            <if test="stage != null and stage !=''">and stage=#{stage}</if>
+        </where>
+    </select>
+
+    <select id="getMenu" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        <include refid="menu"></include>
+        FROM
+        t_menu
+        <where>
+            1=1
+            <if test="id != null and id !=''">and id=#{id}</if>
+            <if test='parent_id != null and parent_id !=""'>and parent_id=#{parent_id}</if>
+            <if test="menu_type != null and menu_type !=''">and menu_type=#{menu_type}</if>
+            <if test="delete_flag != null and delete_flag !=''">and delete_flag=#{delete_flag}</if>
+            <if test="stage != null and stage !=''">and stage=#{stage}</if>
+        </where>
+        order by sort asc
+    </select>
+
+</mapper>

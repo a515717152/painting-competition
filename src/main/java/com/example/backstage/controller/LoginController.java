@@ -11,6 +11,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
+import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+
     // 未登录前默认跳转至登录页面
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
@@ -41,6 +43,7 @@ public class LoginController {
     // 未登录前默认跳转至登录页面
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String defaultLogin() {
+        System.out.println("111");
         return "/view/login";
     }
 
@@ -106,7 +109,7 @@ public class LoginController {
         // 先获取顶级菜单数据
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> stringObjectMap = list.get(i);
-            if (ObjectUtils.isEmpty(stringObjectMap.get("parent_id"))) {
+            if (ObjectUtils.isEmpty(stringObjectMap.get("href"))) {
                 menuList.add(stringObjectMap);
                 list.remove(i);
                 i--;

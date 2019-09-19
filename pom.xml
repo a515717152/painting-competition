@@ -46,12 +46,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>
-
         <!-- 读取yml文件值-->
         <dependency>
             <groupId>org.yaml</groupId>
@@ -80,6 +74,12 @@
             <version>1.9.22</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+            <version>3.0.11.RELEASE</version>
+        </dependency>
+
         <!--    集成shiro所需jar    -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -93,6 +93,14 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/idworker-client -->
+        <dependency>
+            <groupId>com.github.bingoohuang</groupId>
+            <artifactId>idworker-client</artifactId>
+            <version>0.0.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>
