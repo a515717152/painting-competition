@@ -21,7 +21,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         shiroFilterFactoryBean.setLoginUrl("/view/login.html");// shiro默认访问/login.jsp，这里需要自定义下
-        shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");// 如果无权限
+        shiroFilterFactoryBean.setUnauthorizedUrl("/view/login.html");// 如果无权限
 
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // <!-- authc:所有uxxrl都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->/
