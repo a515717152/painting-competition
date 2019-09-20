@@ -33,25 +33,11 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-
-    // 未登录前默认跳转至登录页面
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index() {
-        return "/view/index";
-    }
-
-    // 未登录前默认跳转至登录页面
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String defaultLogin() {
-        System.out.println("111");
-        return "/view/login";
-    }
-
     // 登录
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
-        System.out.println("2222222222222222222222222");
+        System.out.println("-------- 登录认证开始 -------");
         // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
         // 在认证提交前准备 token（令牌）
@@ -121,7 +107,7 @@ public class LoginController {
             pMap.put("child", getChild(pMap.get("id").toString(), list));
             //调用递归方法: getChild(顶级菜单id, 所有菜单内容).得到该菜单下的子菜单.
         }
-       
+
         currency1.put("title", "常规管理");
         currency1.put("icon", "fa fa-address-book");
         currency1.put("child", menuList);
@@ -136,19 +122,10 @@ public class LoginController {
     }
 
 
-    // 测试1 - 表示当前Subject需要权限user:a或user:b。
-    @RequiresPermissions(value = {"user:show", "user:admin"}, logical = Logical.OR)
-    @RequestMapping(value = "page1")
-    public String page1() {
-        return "/view/404";
-    }
-
-
+    // 菜单递归
     private List<Map<String, Object>> getChild(String id, List<Map<String, Object>> rootMenu) {
-
         // 准备接收子菜单
         List<Map<String, Object>> childList = new ArrayList<Map<String, Object>>();
-
         //遍历所有菜单
         for (int i = 0; i < rootMenu.size(); i++) {
             Map<String, Object> cMenu = rootMenu.get(i);
@@ -157,7 +134,6 @@ public class LoginController {
                 childList.add(cMenu);
             }
         }
-
         for (int j = 0; j < childList.size(); j++) {
             Map<String, Object> c2Menu = childList.get(j);
             c2Menu.put("child", getChild(c2Menu.get("id").toString(), rootMenu));
