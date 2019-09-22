@@ -1,17 +1,13 @@
 package com.example.backstage.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.example.backstage.service.LoginService;
+import com.example.backstage.util.ErgodicUtil;
 import com.example.backstage.util.PublicAttribute;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
-import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.awt.SystemColor.menu;
 
 @Controller
 public class LoginController {
@@ -33,7 +26,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    // 登录
+    // 登录校验
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
@@ -64,8 +57,14 @@ public class LoginController {
         }
     }
 
-    // 未登录前默认跳转至登录页面
-    @RequiresPermissions(value = {"user:show", "user:admin", "user:view"}, logical = Logical.OR)
+    //  退出登录 - 其实就是kill掉服务器里面的用户session
+    @RequestMapping(value = "/loginOut", method = RequestMethod.POST)
+    @ResponseBody
+    public String loginOut(@RequestParam("username") String username, @RequestParam("password") String password) {
+        return "";
+    }
+
+    // 左侧菜单及其他数据
     @RequestMapping(value = "/menu", method = RequestMethod.GET)
     @ResponseBody
     public String menu() {
@@ -104,7 +103,7 @@ public class LoginController {
         // 遍历顶级菜单.调用递归方法.
         for (int j = 0; j < menuList.size(); j++) {
             Map<String, Object> pMap = menuList.get(j);
-            pMap.put("child", getChild(pMap.get("id").toString(), list));
+            pMap.put("child", ErgodicUtil.getChild(pMap.get("id").toString(), list));
             //调用递归方法: getChild(顶级菜单id, 所有菜单内容).得到该菜单下的子菜单.
         }
 
@@ -122,27 +121,9 @@ public class LoginController {
     }
 
 
-    // 菜单递归
-    private List<Map<String, Object>> getChild(String id, List<Map<String, Object>> rootMenu) {
-        // 准备接收子菜单
-        List<Map<String, Object>> childList = new ArrayList<Map<String, Object>>();
-        //遍历所有菜单
-        for (int i = 0; i < rootMenu.size(); i++) {
-            Map<String, Object> cMenu = rootMenu.get(i);
-            Object parent_id = cMenu.get("parent_id");
-            if (ObjectUtils.isNotEmpty(parent_id) && id.equals(parent_id.toString())) {
-                childList.add(cMenu);
-            }
-        }
-        for (int j = 0; j < childList.size(); j++) {
-            Map<String, Object> c2Menu = childList.get(j);
-            c2Menu.put("child", getChild(c2Menu.get("id").toString(), rootMenu));
-        }
-        // 递归退出条件: 如果childList.size() == 0,则表明传递进来的菜单下没有子菜单.
-        if (childList.size() == 0) {
-            return null;
-        }
-        return childList;
-    }
+    // 菜单管理
+
+
+
 
 }

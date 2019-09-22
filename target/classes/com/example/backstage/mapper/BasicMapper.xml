@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.backstage.dao.BasicMapper">
+
+    <select id="getMenuList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        t_menu.id,
+        t_menu.title,
+        t_menu.introduction,
+        t_menu.href,
+        t_menu.target,
+        t_menu.icon,
+        t_menu.parent_id,
+        t_menu.sort
+        FROM
+        t_menu
+        <where>
+            1=1
+            <if test="delete_flag != null and delete_flag !=''">and delete_flag = #{delete_flag}</if>
+            <if test="stage != null and stage !=''">and stage=#{stage}</if>
+        </where>
+    </select>
+
+    <select id="getSort" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        t_menu.sort
+        FROM
+        t_menu
+        <where>
+            1=1
+            <if test="delete_flag != null and delete_flag !=''">and delete_flag = #{delete_flag}</if>
+            <if test="stage != null and stage !=''">and stage=#{stage}</if>
+        </where>
+    </select>
+
+    <insert id="addMenu" parameterType="com.example.backstage.pojo.Menu">
+        INSERT INTO t_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title !=''">title,</if>
+            <if test="introduction != null and introduction !=''">introduction,</if>
+            <if test="href != null and href !=''">href,</if>
+            <if test="target != null and target !=''">target,</if>
+            <if test="icon != null and icon !=''">icon,</if>
+            <if test="parent_id != null and parent_id !=''">parent_id,</if>
+            <if test="sort != null and sort !=''">sort,</if>
+            <if test="menu_type != null and menu_type !=''">menu_type,</if>
+            <if test="image != null and image !=''">image,</if>
+            <if test="delete_flag != null and delete_flag !=''">delete_flag,</if>
+            <if test="stage != null and stage !=''">stage,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null and title !=''">#{title},</if>
+            <if test="introduction != null and introduction !=''">#{introduction},</if>
+            <if test="href != null and href !=''">#{href},</if>
+            <if test="target != null and target !=''">#{target},</if>
+            <if test="icon != null and icon !=''">#{icon},</if>
+            <if test="parent_id != null and parent_id !=''">#{parent_id},</if>
+            <if test="sort != null and sort !=''">#{sort},</if>
+            <if test="menu_type != null and menu_type !=''">#{menu_type},</if>
+            <if test="image != null and image !=''">#{image},</if>
+            <if test="delete_flag != null and delete_flag !=''">#{delete_flag},</if>
+            <if test="stage != null and stage !=''">#{stage},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMenu" parameterType="com.example.backstage.pojo.Menu">
+        UPDATE t_menu
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title != null and title !=''">#{title},</if>
+            <if test="introduction != null and introduction !=''">#{introduction},</if>
+            <if test="href != null and href !=''">#{href},</if>
+            <if test="target != null and target !=''">#{target},</if>
+            <if test="icon != null and icon !=''">#{icon},</if>
+            <if test="parent_id != null and parent_id !=''">#{parent_id},</if>
+            <if test="sort != null and sort !=''">#{sort},</if>
+            <if test="menu_type != null and menu_type !=''">#{menu_type},</if>
+            <if test="image != null and image !=''">#{image},</if>
+            <if test="delete_flag != null and delete_flag !=''">#{delete_flag},</if>
+            <if test="stage != null and stage !=''">#{stage},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteMenu" parameterType="com.example.backstage.pojo.Menu">
+        delete from t_menu where t_menu.id = #{id}
+    </delete>
+</mapper>

@@ -24,15 +24,15 @@ public class CustomRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 获取登录用户的信息
         Map<String, String> search = new HashMap<String, String>();
-        search.put("username", username);
+        search.put("user_name", username);
         search.put("delete_flag", PublicAttribute.UN_DELETE);
         search.put("stage", PublicAttribute.NOT_DISABLED);
         // 获取用户角色
         Set<String> roles = userService.getRole(search);
         info.addRoles(roles);
         // 根据 username 获取用户权限
-        Set<String> permission = userService.getPermission(search);
-        info.setStringPermissions(permission);
+//        Set<String> permission = userService.getPermission(search);
+//        info.setStringPermissions(permission);
         return info;
     }
 
@@ -47,20 +47,21 @@ public class CustomRealm extends AuthorizingRealm {
         String userPwd = new String((char[]) authenticationToken.getCredentials());
         //根据用户名从数据库获取密码
         Map<String, String> search = new HashMap<>();
-        search.put("username", userName);
-        search.put("password", userPwd);
+        search.put("user_name", userName);
+        search.put("pass_word", userPwd);
         search.put("delete_flag", PublicAttribute.UN_DELETE);
         search.put("stage", PublicAttribute.NOT_DISABLED);
         List<Map<String, Object>> userList = userService.getUserList(search);
         if (userList != null && userList.size() > 0) {
             Map<String, Object> result = userList.get(0);
-            String username = result.get("username").toString();
-            String password = result.get("password").toString();
+            String username = result.get("user_name").toString();
+            String password = result.get("pass_word").toString();
             if (username == null) {
                 throw new AccountException("用户名不正确");
-            } else if (!userPwd.equals(password)) {
-                throw new AccountException("密码不正确");
             }
+//            else if (!userPwd.equals(password)) {
+//                throw new AccountException("密码不正确");
+//            }
         } else {
             throw new AccountException("用户名不正确");
         }

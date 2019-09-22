@@ -12,6 +12,13 @@ import org.springframework.context.annotation.DependsOn;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @program: backstage
+ * @description: shiro配置
+ * @author: liuyan
+ * @create: 2019-09-20 15:02
+ * @introduction: 该项目比较简单， 仅用角色进行控制即可，不需要再细分一些详细的权限
+ **/
 @Configuration
 public class ShiroConfig {
 
@@ -28,6 +35,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/layuimini-master/**", "anon");// 静态资源位置
         filterChainDefinitionMap.put("/view/**", "anon");// 静态资源位置
         filterChainDefinitionMap.put("/login", "anon");// 登录接口
+
 //        可以通过在这里标明接口所需具体权限，但如果接口很多呢？难道在这里要写上几百行？
 
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 剩余的都需要认证
