@@ -18,6 +18,10 @@
     <div class="layuimini-main">
         <div>
             <div class="layui-btn-group">
+                <button class="layui-btn data-add-btn">添加</button>
+                <button class="layui-btn layui-btn-danger data-delete-btn">删除</button>
+            </div>
+            <div class="layui-btn-group">
                 <button class="layui-btn" id="btn-expand">全部展开</button>
                 <button class="layui-btn" id="btn-fold">全部折叠</button>
             </div>
@@ -79,6 +83,20 @@
         $('#btn-fold').click(function () {
             treetable.foldAll('#munu-table');
         });
+
+        // 点击添加
+        $(".data-add-btn").on("click",function () {
+            //iframe窗
+            //iframe层-父子操作
+            layer.open({
+                type: 2,
+                area: ['700px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/basic/addMenu.html',
+                btn: ['确定', '关闭']
+            });
+        })
 
         //监听工具条
         menuList.on('tool(munu-table)', function (obj) {

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <html>
 <head>
     <meta charset="utf-8">
@@ -10,44 +11,52 @@
     <link rel="stylesheet" href="/layuimini-master/css/public.css" media="all">
 </head>
 <body>
-<div class="layuimini-container">
-    <div class="layuimini-main">
 
-        <fieldset class="layui-elem-field layuimini-search">
-            <legend>搜索信息</legend>
-            <div style="margin: 10px 10px 10px 10px">
-                <form class="layui-form layui-form-pane" action="">
+<form class="layui-form" action="">
 
-                    <div class="layui-form-item">
-
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户姓名</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-
-                        <div class="layui-inline">
-                            <a class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</a>
-                        </div>
-
-                    </div>
-
-                </form>
-            </div>
-        </fieldset>
-
-        <div class="layui-btn-group">
-            <button class="layui-btn data-add-btn">添加</button>
-            <button class="layui-btn layui-btn-danger data-delete-btn">删除</button>
+    <input id="treeId" name="parentId" type="hidden" th:value="${menu.menuId}" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级菜单：</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
         </div>
-        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
-        <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
-        </script>
     </div>
-</div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="like[write]" title="管理员">
+            <input type="checkbox" name="like[read]" title="操作员" checked="">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">开关-默认开</label>
+        <div class="layui-input-block">
+            <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">单选框</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="男" title="男" checked="">
+            <input type="radio" name="sex" value="女" title="女">
+            <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+
 <script src="/layuimini-master/lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['form', 'table'], function () {
@@ -57,19 +66,20 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '/basic/userList',
-            // url: '/layuimini-master/api/table.json',
-            cols: [
-                [
+            url: '../api/table.json',
+            cols: [[
                 {type: "checkbox", width: 50, fixed: "left"},
-                {field: 'id', width: 200, title: 'ID', sort: true},
-                {field: 'nick_name', width: 200, title: '昵称'},
-                {field: 'user_name', width: 200, title: '登录账户'},
-                // {field: 'school_name', width: 80, title: '学校名称', sort: true},
+                {field: 'id', width: 80, title: 'ID', sort: true},
+                {field: 'username', width: 80, title: '用户名'},
+                {field: 'sex', width: 80, title: '性别', sort: true},
+                {field: 'city', width: 80, title: '城市'},
+                {field: 'sign', title: '签名', minWidth: 150},
+                {field: 'experience', width: 80, title: '积分', sort: true},
+                {field: 'score', width: 80, title: '评分', sort: true},
+                {field: 'classify', width: 80, title: '职业'},
+                {field: 'wealth', width: 135, title: '财富', sort: true},
                 {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
-                ]
-            ],
-
+            ]],
             limits: [10, 15, 20, 25, 50, 100],
             limit: 15,
             page: true

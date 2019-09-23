@@ -41,7 +41,7 @@ layui.define(["element", "jquery"], function (exports) {
          * @param url
          */
         this.init = function (url) {
-            var loading = layer.load(0, {shade: false, time: 2 * 1000});
+            var loading = layer.load(0, {shade: false, time: 0 * 1000});
             layuimini.initBgColor();
             layuimini.initDevice();
             $.getJSON(url, function (data, status) {
